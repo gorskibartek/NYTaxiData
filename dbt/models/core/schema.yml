@@ -1,0 +1,67 @@
+
+version: 2
+
+models:
+  - name: trips
+    description: "Main dataset containing data for trips analysis"
+    columns:
+      - name: vendor
+        description: "Name of taxi vendor"
+        tests:
+          - accepted_values:
+              values: ['VeriFone Inc.', 'Creative Mobile Technologies', 'Unknown']
+      - name: pickup_datetime
+        description: "Date and time of trip start based on tpep_pickup_datetime"
+      - name: dropoff_datetime
+        description: "Date and time of trip end based on tpep_dropoff_datetime"
+      - name: number_of_passengers
+        description: "Number of passengers in taxi based on passenger_count"
+      - name: trip_distance
+        description: "Distance of taxi trip in miles"
+      - name: pickup_district
+        description: "District of pickeup (based on Borough from zones_data)"
+      - name: pickup_district_zone
+        description: "Zone of District pickeup (based on Zone from zones_data)"
+        tests:
+          - not_null
+      - name: dropoff_district
+        description: "District of dropoff (based on Borough from zones_data)"
+      - name: dropoff_district_zone
+        description: "Zone of District dropoff (based on Zone from zones_data)"
+      - name: payment_type
+        description: "Type of payment method"
+        tests:
+        - accepted_values:
+              values: ['Cash', 'Credit card', 'No data', 'No charge', 'Dispute', 'Unknown']
+      - name: total_amount
+        description: 'The total amount charged to passengers. Does not include cash tips'
+
+
+  - name: trips_by_month
+    description: "Number of taxi trips grouped by month and year"
+    columns:
+      - name: month
+        description: "Month of trip based on tpep_pickup_datetime"
+      - name: year
+        description: "Year of trip based on tpep_pickup_datetime"
+      - name: number_of_trips
+        description: "Number of taxi trips"
+  
+  - name: trips_by_pickup_district
+    description: "Number of trips grouped by district"
+    columns: 
+      - name: pickup_district
+        description: "Name of pickup district (based on Borough from zones_data)"
+      - name: number_of_trips
+        description: "Number of taxi trips"
+  
+  - name: passengers_by_month
+    description: "Number of passengers grouped by month and year"
+    columns: 
+      - name: month
+        description: "Month of trip based on tpep_pickup_datetime"
+      - name: year
+        description: "Year of trip based on tpep_pickup_datetime"
+      - name: number_of_passengers
+        description: "Number of taxi passengers"
+
